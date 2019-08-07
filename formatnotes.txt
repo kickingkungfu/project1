@@ -1,0 +1,19 @@
+notes for how to set up the data types so that they are all referenced in the tile format.
+
+the set may be useful to set up the initial tile for inquiries
+	within the set there will be dictionaries tied to the various components of the books
+	the set will be able to pull any information from the components entered into it
+	potentially each component of the selected set will spawn new components that will provide a means of investigating the subject further
+		function needed to iterate over all of the components
+	various components may need to be made into classes
+		class Book:
+			def __init__(category, x, y):
+				category.x = x
+				category.y = y
+
+		p = Book(Mystery, fiction)
+			print(p.x)
+			print(p.y)
+
+
+

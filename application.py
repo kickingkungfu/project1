@@ -20,6 +20,10 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+def main():
+    books = db.execute("SELECT title, author, publication year, ISBN number, review count, average score FROM books").fetchall
+    for book in books:
+        print(f"{book.title} to {book.title}, {book.author}, {book.publication_year}, {book.ISBN}, {book.reviews}, {book.score}")
 
 @app.route("/")
 def index():

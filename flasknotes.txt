@@ -1,0 +1,60 @@
+in the book app there will be tiles with different formats for the different components
+	each of the tile formats will require a flask application
+	the tile applications will be specific to the component each is highlighting
+		an ideal situation would be a module popping up when the tile is clicked (browser features may interfere)
+	potential that a person would be able to enter a different genre for the website in the url and then it will bring you right there (POST), or they can fill out a form and it will take them to the genre if available
+	@app.route("/<string:genre>", methods=["POST, GET"])
+	def index(genre):
+		genre = request.form.get("genre")
+		return render_template("genre.html", genre=genre)
+
+	for the html template of genre there will be a function to pull in different divs populated with the various books of the specified genre
+	<div>{{ genre }}</div>
+	for the Jinja2 syntax in the html page divs
+		{% for tile in tiles %}
+			<div>first book</div>
+			<div>second book</div>
+	an additional feature for each genre page will be tiles at the bottom that reference specifc genres for the user to dig deeper into the genre
+		another idea is to add a cookie trail for previous searches
+		<a href="{{ url_for('subgenres') }}" method="post">more divs for subgenres</a>
+		<a href="{{ url_for('cookietrail') }}" method="post">
+			<input type="text" name="note" placeholder="Previous searches">
+			<button>list of searches</button>
+			
+	for the template inheritance for each genre there will be a variable layout
+		{% extends "genre.html" %}
+		
+		{% block heading %}
+			genre
+		{% endlbock %}
+	
+		{% block div %}
+			first book
+		{% end block %}
+	
+		{% block body %}
+			<form action="{{ url_for('genre') }}" method="post">
+				<input type="text" genre="genre" placeholder="Enter Your Favorite Genre">
+				<button>Submit</button>
+			</form>
+		{% end block %}
+
+
+	for the session make sure it is imported and also from flask_session import Session is included then include the session["notes"] = [] is included to move the data to a filesystem
+			include if session.get("notes") is None: to make sure that notes are not overriding after the first one is created
+
+		app.config["SESSION_PERMANENT"] = False
+		app.config["SESSION_TYPE"] = "filesystem"
+		Session(app)
+
+	notes = []
+
+	@app.route("/", methods=["GET", "POST"])
+	def index():
+		if request.method = "POST":
+			note = request.form.get("note")
+			notes.append(note)
+
+	return render_template(index.html", notes=notes)
+
+

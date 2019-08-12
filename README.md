@@ -16,10 +16,10 @@ def reviews():
 # select book to review
 
 
-UPDATE reviews
+db.execute("UPDATE reviews
   SET rating = :rating
   WHERE isbn = :isbn
-  AND isbn = UNIQUE;
+  AND isbn = UNIQUE")
   # include a link to the review for a book
   @app.route("/int:isbn"/review)
   def review()
@@ -37,7 +37,7 @@ def search():
     except ValueError:
       return render_template("error.html", message="Your request is not available.  Please double check.")
     db.execute("SELECT * FROM books
-      WHERE isbn OR title OR author = %search%", {"search": search}).fetchall() = searches[]: # create a list of the searches to be fed into the template where a div is created for each of the results
+      WHERE isbn OR title OR author = %search%", {"search": search}").fetchall() = searches[]: # create a list of the searches to be fed into the template where a div is created for each of the results
       return render_template("results.html", search=searches)
       db.commit()
       
@@ -53,6 +53,7 @@ def info(index):
     db.execute("FROM books SELECT isbn, title, author, year WHERE {index} = isbn").fetchall()
       for book in books
         return render_template("isbn.html" isbn={books.isbn}, titl={books.title}, author={books.author}, year={books.year})
+        db.commit()
       
       
       

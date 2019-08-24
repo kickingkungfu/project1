@@ -6,28 +6,17 @@
 
 {% endblock %}
 
-{%block body %}
+{% block body %}
 		<div class="container">
 			<div class="row align-items-start">
-				<form action="{{ url_for("user") }}" methods="post">
-					<div class="col">
-						<div class="form-group">
-							<label for="username">USERNAME</label>        
-							<input type="text" class="form-control" username="username" id="inlineFormInputGroupUsername2" placeholder="Username">
-						</div>	
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="exampleInputPassword1">Password</label>
-							<input type="password" password="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-						</div>
-					</div>
-					<div class="col">
-						<div>
-							<button type="submit" class="btn btn-primary">SUBMIT</button>
-						</div>
-					</div>
-				</form>
+				<div class="col">
+					<a href="{{ url_for('login_page') }}">LOGIN
+					</a>
+				</div>
+				<div class="col">
+					<a href="{{ url_for('create_acccount') }}">LOGIN
+					</a>
+				</div>
 			</div>
 			<div class="row align-items-start">
 				<div class="col">1

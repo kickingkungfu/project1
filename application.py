@@ -20,29 +20,42 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
 	return render_template("index.html", message="Welcome to the Book APP!")
 
 @app.route("/login", methods=["GET", "POST"])
 def login_page():
-	if request.method == "POST":
 		return render_template("login.html", message="Please log into your account.")
 
+@app.route("/create_account", methods=["POST", "GET"])
+def create_account():
+	return render_template("create_account.html", user=session["users"], message="Please create a username and password")
 
+users = []
+passwords = []
 
-@app.route("/login", methods=["POST", "GET"])
-def login():
-		
-# Check the session is empty, create the session and get form information.
-	if session.get("users") is None:
+@app.route("/user", methods=["POST", "GET"])
+def user():
+	if request.method == "GET":
+		return render_template("login.html", message="Please log into your account.")
+	elif request.method =="POST":
 		session["users"] = []
-		user = request.form.get("username")
+		session["password"] = []
+		username = request.form.get("username")
 		password = request.form.get("password")
-
+		session["username"].append(username)
+		session["password"].append(password)
+		return render_template("books.html", user=session["users"])
+			
+@app.route("/books", methods=["POST", "GET"])
+def books():
+	if method is "POST":
 #Make sure the user exists
-		return render_template ("index.html")
-		
+		return render_template("books.html", message="Welcome to the Book APP!")
+	else:
+		return render_template("books.html", message="You are already logged in.")
+
    
 @app.route("/logout")
 def logout():

@@ -10,7 +10,8 @@
 		<div class="container">
 			<div class="row align-items-start">
 				<div class="col">
-					<button action="{{ url_for('login_page') }}" methods=["POST"] placeholder="LOGIN">LOGIN</button>
+					<button action="{{ url_for('login_page') }}">LOGIN
+					</button>
 				</div>
 			</div>
 			<div class="row align-items-start">

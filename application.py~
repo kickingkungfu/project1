@@ -22,32 +22,11 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-	return render_template("index.html", message="Welcome to the Book APP!")
+    return render_template("index.html", message="Welcome to the Book APP!")
 
 @app.route("/login", methods=["GET", "POST"])
 def login_page():
-	if request.method == "POST":
-		return render_template("login.html", message="Please log into your account.")
-
-
-
-@app.route("/login", methods=["POST", "GET"])
-def login():
-		
-# Check the session is empty, create the session and get form information.
-	if session.get("users") is None:
-		session["users"] = []
-		user = request.form.get("username")
-		password = request.form.get("password")
-
-#Make sure the user exists
-		return render_template ("index.html")
-		
-   
-@app.route("/logout")
-def logout():
-	session.pop("username", None)
-	return render_template("logout.html", message="You are now logged out!")
+    return render_template("login.html", message="Please log into your account.")
 
 if __name__ == "__main__":
     main()

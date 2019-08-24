@@ -20,19 +20,10 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-def main():
-    b = open("books.csv")
-    reader = csv.reader(b)
-    for ISBN, title, author, published in reader:
-        db.execute("INSERT INTO books (ISBN, title, author, published) VALUE (:ISBN, :title, :author, :published)",
-        {"ISBN": ISBN, "title": title, "author": author, "published": published})
-    db.commit()
-        
-
-#Prompt user for the ISBN
-book_ISBN = int(input("/nISBN: "))
-book = db.execute("SELECT ISBN, title, author, published FROM books WHERE ISBN = :ISBN",
-        {"ISBN": book_ISBN}).fetchone()
+# Prompt user for the ISBN
+book_isbn = int(input("/nISBN: "))
+book = db.execute("SELECT isbn, title, author, year FROM books WHERE isbn = :isbn",
+        {"isbn": book_isbn}).fetchone()
 
 #make sure ISBN is valid
 if ISBN is None:
@@ -54,15 +45,26 @@ except ValueError:
 #Make sure review does not exist
 if db.execute("SELECT * FROM books WHERE ISBN_id = :ISBN", {"ISBN_id": ISBN}).rowcount == 0:
     render_template("error.html", message="No such ISBN available.")
-db.execute("INSERT INTO books (ISBN_id
+db.execute("INSERT INTO books (ISBN_id "
 
+# create a list for usernames
+usernames = []
 
-#Provide access to user data
+# Provide access to user data
+@app.route("/", methods=["POST"])
 def login():
-    username = db.execute("SELECT * FROM users WHERE (username = username) AND (password = password)");
+    user = request.form.get("username") #create a variable for the username in the form
+    password = request.form.get("password") #create a variable for the password in the form
+    if session.get("usernames") is None:
+        session["usernames"] = []
+    if request.method == "POST":
+        username = request.form.get("username")
+        session["usernames"].append(username)
+        username = db.execute("SELECT * FROM usernames WHERE (username = username) AND (password = password)");
+    return render_template("login.html", user=user, password=password)
 
 @app.route("/")
 def index():
-    return "Project 1: TODO"
+    return render_template("homepage.html")
 
 

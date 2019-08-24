@@ -1,0 +1,6 @@
+CREATE TABLE reviews (
+	ISBN INTEGER PRIMARY KEY REFERENCES books,
+	rating INTEGER NULL,
+	reviews VARCHAR
+)
+

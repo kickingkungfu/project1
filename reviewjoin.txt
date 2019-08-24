@@ -1,0 +1,2 @@
+SELECT ISBN, title, author, published FROM books JOIN reviewtable 
+ON book.ISBN = reviews.ISBN;

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+	Welcome to the Book APP Homepage!
+{% endblock %}
+
+{% block body %}
+
+			<div class="row align-items-start">
+				
+				{% for search in searches %}
+
+				<div class="col">{{ search }}</div>
+
+				{% endfor %}
+
+{% endblock %}
+
+

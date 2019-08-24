@@ -22,32 +22,28 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-	return render_template("index.html", message="Welcome to the Book APP!")
+    return render_template("index.html")
 
-@app.route("/login", methods=["GET", "POST"])
-def login_page():
-	if request.method == "POST":
-		return render_template("login.html", message="Please log into your account.")
+users = []
 
-
-
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/", methods=["POST"])
 def login():
-		
-# Check the session is empty, create the session and get form information.
-	if session.get("users") is None:
-		session["users"] = []
-		user = request.form.get("username")
-		password = request.form.get("password")
-
-#Make sure the user exists
-		return render_template ("index.html")
-		
+	# Get form information.
+    user = request.form.get("username")
+    password = request.form.get("password")
+    
+	#Make sure the user exists
+	if db.execute("SELECT * FROM users WHERE username = :username", {"username": user}).rowcount == 0:
+		return render_template("login.html", message="Invalid username and/or password.")
+	db.execute("INSERT INTO users (user, password) VALUES (:user, password)",
+		{"user": username, "password": password})
+	db.commit()
+		return render_template("enter.html", message="Welcome to the BOOK APP {user}!")
    
 @app.route("/logout")
 def logout():
-	session.pop("username", None)
-	return render_template("logout.html", message="You are now logged out!")
+    session.pop("username", None)
+    return render_template("logout.html", message="You are now logged out!")
 
 if __name__ == "__main__":
     main()
